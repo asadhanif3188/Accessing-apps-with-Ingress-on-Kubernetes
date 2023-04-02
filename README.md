@@ -182,12 +182,11 @@ kind: Service
 metadata:    
   name: odoo-service
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: odoo
   ports:
     - protocol: TCP
       port: 8069
       targetPort: 8069
-      nodePort: 30300
 ```
