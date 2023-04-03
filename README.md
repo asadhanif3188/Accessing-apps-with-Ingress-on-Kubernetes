@@ -246,3 +246,6 @@ Run following command to execute Odoo app.
 
 `kubectl apply -f odoo-with-postgres.yaml`
 
+Run following command to execute the Ingress resource. 
+
+`kubectl apply -f ingress.yaml`
