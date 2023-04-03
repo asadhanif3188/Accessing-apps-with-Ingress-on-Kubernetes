@@ -408,11 +408,10 @@ kind: Service
 metadata:
   name: frontend
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: frontend
   ports:
   - protocol: TCP 
     port: 8080
     targetPort: 8080
-    nodePort: 30007

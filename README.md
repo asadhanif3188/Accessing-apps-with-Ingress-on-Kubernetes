@@ -190,3 +190,40 @@ spec:
       port: 8069
       targetPort: 8069
 ```
+
+## Ingress Recource
+Following is the configuration for Ingress to access different applications.
+
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: myapps-ingress
+spec:
+  rules:
+  - host: myapps.com
+    http:
+      paths:
+      - path: /online-shop
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port:
+              number: 8080
+      - path: /wordpress
+        pathType: Prefix
+        backend:
+          service:
+            name: wordpress-service
+            port:
+              number: 80
+      - path: /odoo
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-service
+            port:
+              number: 8069
+```
+
