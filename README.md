@@ -227,3 +227,22 @@ spec:
               number: 8069
 ```
 
+## Running Applications and Ingress
+It is time to see all the components in action. 
+
+First of all enable the ingress on Minikube, using following command: 
+
+`minikube addons enable ingress`
+
+Run following command to activate microservices of online shop app. 
+
+`kubectl apply -f online-shop-microservices.yaml`
+
+Run following command to execute WordPress app. 
+
+`kubectl apply -f wordpress-with-mysql.yaml`
+
+Run following command to execute Odoo app. 
+
+`kubectl apply -f odoo-with-postgres.yaml`
+
