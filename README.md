@@ -249,3 +249,7 @@ Run following command to execute Odoo app.
 Run following command to execute the Ingress resource. 
 
 `kubectl apply -f ingress.yaml`
+
+To see the the IP address of Ingress, run following command. 
+
+`kubectl get ingress`
