@@ -22,7 +22,7 @@ spec:
           service:
             name: reddit-clone-service
             port:
-              number: 8081
+              number: 3000
       - path: /wordpress
         pathType: Prefix
         backend:
