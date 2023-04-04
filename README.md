@@ -25,7 +25,7 @@ spec:
   type: ClusterIP
   ports:
     - port: 8081
-      targetPort: 8081
+      targetPort: 3000
   selector:
     app: reddit-clone
 ---
@@ -50,7 +50,7 @@ spec:
       - image: asadhanif3188/redditclone:v1
         name: reddit-clone
         ports:
-        - containerPort: 8081
+        - containerPort: 3000
 ```
 
 ## 3. WordPress with MySQL
