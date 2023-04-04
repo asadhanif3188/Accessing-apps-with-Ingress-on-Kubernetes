@@ -16,6 +16,13 @@ spec:
             name: frontend
             port:
               number: 8080
+      - path: /reddit-clone
+        pathType: Prefix
+        backend:
+          service:
+            name: reddit-clone-service
+            port:
+              number: 8081
       - path: /wordpress
         pathType: Prefix
         backend:
@@ -23,21 +30,7 @@ spec:
             name: wordpress-service
             port:
               number: 80
-      - path: /wp-admin
-        pathType: Prefix
-        backend:
-          service:
-            name: wordpress-service
-            port:
-              number: 80
       - path: /odoo
-        pathType: Prefix
-        backend:
-          service:
-            name: odoo-service
-            port:
-              number: 8069
-      - path: /web
         pathType: Prefix
         backend:
           service:

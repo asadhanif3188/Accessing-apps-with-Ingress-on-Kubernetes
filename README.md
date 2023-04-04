@@ -3,14 +3,57 @@
 In this project we are going to deploy multiple applications on Kubernetes cluster and Ingress will be used to access those apps from outside the cluster. 
 
 Following Apps would be deployed to demonstrate the working:
-1. Online Shop with Microservices 
-2. WordPress with MySQL
-3. Odoo with Postgres 
+1. [Online Shop with Microservices](#1-online-shop-with-microservices) 
+2. [Reddit Clone](#2-reddit-clone-app)
+3. WordPress with MySQL
+4. Odoo with Postgres 
 
 ## 1. Online Shop with Microservices
 We'll be using the configurations of microservices from the repo [Microservices-based-E-Commerce-App](https://github.com/asadhanif3188/Microservices-based-E-Commerce-App). 
 
-## 2. WordPress with MySQL
+## 2. Reddit Clone App
+Following is the configuration used to deploy Reddit Clone App. 
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: reddit-clone-service
+  labels:
+    app: reddit-clone
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8081
+      targetPort: 8081
+  selector:
+    app: reddit-clone
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reddit-clone-deployment
+  labels:
+    app: reddit-clone
+spec:
+  selector:
+    matchLabels:
+      app: reddit-clone
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: reddit-clone
+    spec:
+      containers:
+      - image: asadhanif3188/redditclone:v1
+        name: reddit-clone
+        ports:
+        - containerPort: 8081
+```
+
+## 3. WordPress with MySQL
 Following is the configuration used to deploy WordPress with MySQL. 
 
 ```
@@ -104,7 +147,7 @@ spec:
           name: wordpress
 ```
 
-## 3. Odoo with Postgres
+## 4. Odoo with Postgres
 Following is the configuration used to deploy Odoo with Postgres. 
 
 ```
@@ -199,6 +242,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: myapps-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - host: myapps.com
@@ -211,6 +256,13 @@ spec:
             name: frontend
             port:
               number: 8080
+      - path: /reddit-clone
+        pathType: Prefix
+        backend:
+          service:
+            name: reddit-clone-service
+            port:
+              number: 8081
       - path: /wordpress
         pathType: Prefix
         backend:
@@ -234,9 +286,17 @@ First of all enable the ingress on Minikube, using following command:
 
 `minikube addons enable ingress`
 
+Check the status of ingress. 
+
+`minikube addons status`
+
 Run following command to activate microservices of online shop app. 
 
 `kubectl apply -f online-shop-microservices.yaml`
+
+Run following command to execute reddit-clone app. 
+
+`kubectl apply -f reddit-clone.yaml`
 
 Run following command to execute WordPress app. 
 
