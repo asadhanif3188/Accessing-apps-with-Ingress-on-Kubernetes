@@ -11,47 +11,6 @@ Following Apps would be deployed to demonstrate the working:
 ## 1. Online Shop with Microservices
 We'll be using the configurations of microservices from the repo [Microservices-based-E-Commerce-App](https://github.com/asadhanif3188/Microservices-based-E-Commerce-App). 
 
-## 2. Reddit Clone App
-Following is the configuration used to deploy Reddit Clone App. 
-
-```
-apiVersion: v1
-kind: Service
-metadata:
-  name: reddit-clone-service
-  labels:
-    app: reddit-clone
-spec:
-  type: ClusterIP
-  ports:
-    - port: 8081
-      targetPort: 3000
-  selector:
-    app: reddit-clone
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: reddit-clone-deployment
-  labels:
-    app: reddit-clone
-spec:
-  selector:
-    matchLabels:
-      app: reddit-clone
-  strategy:
-    type: Recreate
-  template:
-    metadata:
-      labels:
-        app: reddit-clone
-    spec:
-      containers:
-      - image: asadhanif3188/redditclone:v1
-        name: reddit-clone
-        ports:
-        - containerPort: 3000
-```
 
 ## 3. WordPress with MySQL
 Following is the configuration used to deploy WordPress with MySQL. 
@@ -293,10 +252,6 @@ Run following command to see the status of ingress addon.
 Run following command to activate microservices of online shop app. 
 
 `kubectl apply -f online-shop-microservices.yaml`
-
-Run following command to execute reddit-clone app. 
-
-`kubectl apply -f reddit-clone.yaml`
 
 Run following command to execute WordPress app. 
 

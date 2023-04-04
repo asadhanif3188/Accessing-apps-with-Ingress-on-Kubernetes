@@ -16,13 +16,6 @@ spec:
             name: frontend
             port:
               number: 8080
-      - path: /reddit-clone
-        pathType: Prefix
-        backend:
-          service:
-            name: reddit-clone-service
-            port:
-              number: 3000
       - path: /wordpress
         pathType: Prefix
         backend:
