@@ -286,9 +286,9 @@ First of all enable the ingress on Minikube, using following command:
 
 `minikube addons enable ingress`
 
-Check the status of ingress. 
+Run following command to see the status of ingress addon. 
 
-`minikube addons status`
+`minikube addons list`
 
 Run following command to activate microservices of online shop app. 
 
