@@ -163,3 +163,14 @@ To see the the IP address of Ingress, run following command.
 
 ## Screenshots of Running Applications 
 
+Screenshot of all services. 
+![all services](./screenshot/all-services.png)
+
+Screenshot of Ingress. 
+![Ingress](./screenshot/ingress.png)
+
+Screenshot of Online Shop. 
+![Online Shop](./screenshot/online-shop-via-ingress.png)
+
+Screenshot of WordPress. 
+![WordPress](./screenshot/wordpress-via-ingress.png)
