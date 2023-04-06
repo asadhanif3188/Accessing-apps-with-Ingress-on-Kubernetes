@@ -3,16 +3,13 @@
 In this project we are going to deploy multiple applications on Kubernetes cluster and Ingress will be used to access those apps from outside the cluster. 
 
 Following Apps would be deployed to demonstrate the working:
-1. [Online Shop with Microservices](#1-online-shop-with-microservices) 
-2. [Reddit Clone](#2-reddit-clone-app)
-3. WordPress with MySQL
-4. Odoo with Postgres 
+1. Online Shop with Microservices
+2. WordPress with MySQL
 
 ## 1. Online Shop with Microservices
 We'll be using the configurations of microservices from the repo [Microservices-based-E-Commerce-App](https://github.com/asadhanif3188/Microservices-based-E-Commerce-App). 
 
-
-## 3. WordPress with MySQL
+## 2. WordPress with MySQL
 Following is the configuration used to deploy WordPress with MySQL. 
 
 ```
@@ -106,93 +103,6 @@ spec:
           name: wordpress
 ```
 
-## 4. Odoo with Postgres
-Following is the configuration used to deploy Odoo with Postgres. 
-
-```
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: postgres-deployment
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: postgres
-  template:
-    metadata:
-      labels:
-        app: postgres
-    spec:
-      containers:
-        - name: postgres
-          image: postgres:10.1
-          ports:
-            - containerPort: 5432
-          env:
-          - name: POSTGRES_DB
-            value: postgresdb
-          - name: POSTGRES_USER
-            value: admin
-          - name: POSTGRES_PASSWORD
-            value: root
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: postgres-service
-  labels:
-    app: postgres
-spec:
-  type: ClusterIP
-  ports:
-    - port: 5432
-  selector:
-    app: postgres
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: odoo-deployment
-  labels:
-    app: odoo
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: odoo
-  template:
-    metadata:
-      labels:
-        app: odoo
-    spec:
-      containers:
-      - name: odoo
-        image: odoo:14.0
-        ports:
-        - containerPort: 8069
-        env:
-        - name: HOST
-          value: postgres-service
-        - name: USER
-          value: admin
-        - name: PASSWORD
-          value: root
----
-apiVersion: v1
-kind: Service
-metadata:    
-  name: odoo-service
-spec:
-  type: ClusterIP
-  selector:
-    app: odoo
-  ports:
-    - protocol: TCP
-      port: 8069
-      targetPort: 8069
-```
-
 ## Ingress Recource
 Following is the configuration for Ingress to access different applications.
 
@@ -215,27 +125,13 @@ spec:
             name: frontend
             port:
               number: 8080
-      - path: /reddit-clone
-        pathType: Prefix
-        backend:
-          service:
-            name: reddit-clone-service
-            port:
-              number: 8081
-      - path: /wordpress
+      - path: /
         pathType: Prefix
         backend:
           service:
             name: wordpress-service
             port:
               number: 80
-      - path: /odoo
-        pathType: Prefix
-        backend:
-          service:
-            name: odoo-service
-            port:
-              number: 8069
 ```
 
 ## Running Applications and Ingress
@@ -257,10 +153,6 @@ Run following command to execute WordPress app.
 
 `kubectl apply -f wordpress-with-mysql.yaml`
 
-Run following command to execute Odoo app. 
-
-`kubectl apply -f odoo-with-postgres.yaml`
-
 Run following command to execute the Ingress resource. 
 
 `kubectl apply -f ingress.yaml`
@@ -268,3 +160,6 @@ Run following command to execute the Ingress resource.
 To see the the IP address of Ingress, run following command. 
 
 `kubectl get ingress`
+
+## Screenshots of Running Applications 
+
